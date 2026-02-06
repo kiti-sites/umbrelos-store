@@ -1,14 +1,33 @@
-version: "3.7"
+version: "3.8"
 
 services:
-
-  app_proxy:
+  mediawiki:
+    image: mediawiki:1.41
+    container_name: mediawiki
+    restart: unless-stopped
+    ports:
+      - "8085:80"
     environment:
-      # The format here is: <app-id>_<docker-service-name>_1
-      APP_HOST: sparkles-hello-world_server_1
-      APP_PORT: 3000
-    
-  server:
-    image: getumbrel/community-app-store-hello-world:latest
-    user: "1000:1000"
-    init: true
+      MEDIAWIKI_DB_TYPE: mysql
+      MEDIAWIKI_DB_HOST: db
+      MEDIAWIKI_DB_PORT: 3306
+      MEDIAWIKI_DB_NAME: mediawiki
+      MEDIAWIKI_DB_USER: mediawiki
+      MEDIAWIKI_DB_PASSWORD: mediawiki_pass
+    volumes:
+      - ./data/mediawiki/images:/var/www/html/images
+      - ./data/mediawiki/LocalSettings.php:/var/www/html/LocalSettings.php
+    depends_on:
+      - db
+
+  db:
+    image: mariadb:10.11
+    container_name: mediawiki-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: mediawiki
+      MYSQL_USER: mediawiki
+      MYSQL_PASSWORD: mediawiki_pass
+      MYSQL_ROOT_PASSWORD: root_pass
+    volumes:
+      - ./data/mariadb:/var/lib/mysql
