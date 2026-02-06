@@ -1,8 +1,8 @@
 manifestVersion: 1
-id: sparkles-hello-world
-name: Hello World
-tagline: Replace this tagline with your app's tagline
-icon: https://svgur.com/i/mvA.svg
+id: media-wiki
+name: MediaWiki
+tagline: Uma Wiki
+icon: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/MediaWiki-2020-logo.svg/330px-MediaWiki-2020-logo.svg.png
 category: Development
 version: "1.0.0"
 port: 4000
